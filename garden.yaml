@@ -1,0 +1,58 @@
+esphome:
+  name: garden
+  platform: ESP8266
+  board: esp01_1m
+
+wifi:
+  ssid: "xxxx"
+  password: "xxxx"
+
+# Enable logging
+logger:
+  baud_rate: 0
+
+# Enable Home Assistant API
+api:
+  password: "xxxx"
+
+ota:
+  password: "xxxx"
+
+uart:
+  rx_pin: GPIO3
+  tx_pin: GPIO1
+  baud_rate: 115200
+
+switch:
+  - platform: template
+    id: relay1
+    name: "Relay 1"
+    optimistic: true
+    turn_on_action:
+      - uart.write: [0xA0, 0x01, 0x01, 0xA2]
+    turn_off_action:
+      - uart.write: [0xA0, 0x01, 0x00, 0xA1]
+  - platform: template
+    id: relay2
+    name: "Relay 2"
+    optimistic: true
+    turn_on_action:
+      - uart.write: [0xA0, 0x02, 0x01, 0xA3]
+    turn_off_action:
+      - uart.write: [0xA0, 0x02, 0x00, 0xA2]
+  - platform: template
+    id: relay3
+    name: "Relay 3"
+    optimistic: true
+    turn_on_action:
+      - uart.write: [0xA0, 0x03, 0x01, 0xA4]
+    turn_off_action:
+      - uart.write: [0xA0, 0x03, 0x00, 0xA3]
+  - platform: template
+    id: relay4
+    name: "Relay 4"
+    optimistic: true
+    turn_on_action:
+      - uart.write: [0xA0, 0x04, 0x01, 0xA5]
+    turn_off_action:
+      - uart.write: [0xA0, 0x04, 0x00, 0xA4]
